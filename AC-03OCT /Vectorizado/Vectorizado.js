@@ -12,11 +12,17 @@ let puntos = [];
 function generarPuntosAleatorios(numPuntos) {
     const puntosGenerados = [];
     for (let i = 0; i < numPuntos; i++) {
-        const x = Math.random() * (600 - 50) + 25; // Margen para no salir del canvas
+        const x = Math.random() * (600 - 50) + 25; // Margen para no salir del contenedor
         const y = Math.random() * (400 - 50) + 25;
         puntosGenerados.push(new Punto(x, y));
     }
-
-    // Ordenar los puntos en sentido horario
     return ordenarPuntos(puntosGenerados);
+}
+
+// Función para ordenar puntos en sentido horario
+function ordenarPuntos(puntos) {
+    const centroide = calcularCentroide(puntos);
+    return puntos.sort((a, b) => {
+        return Math.atan2(a.y - centroide.y, a.x - centroide.x) - Math.atan2(b.y - centroide.y, b.x - centroide.x);
+    });
 }
