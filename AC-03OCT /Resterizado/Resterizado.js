@@ -79,3 +79,41 @@ function dibujarCentroide(centroide, puntos) {
         ctx.stroke();
     }
 }
+// Función para verificar si el polígono es convexo o cóncavo
+function esConvexo(puntos) {
+    let signo = 0;
+    const longitud = puntos.length;
+    for (let i = 0; i < longitud; i++) {
+        const dx1 = puntos[(i + 2) % longitud].x - puntos[(i + 1) % longitud].x;
+        const dy1 = puntos[(i + 2) % longitud].y - puntos[(i + 1) % longitud].y;
+        const dx2 = puntos[i].x - puntos[(i + 1) % longitud].x;
+        const dy2 = puntos[i].y - puntos[(i + 1) % longitud].y;
+        const cruz = dx1 * dy2 - dy1 * dx2;
+        if (cruz !== 0) {
+            const nuevoSigno = cruz > 0 ? 1 : -1;
+            if (signo === 0) {
+                signo = nuevoSigno;
+            } else if (signo !== nuevoSigno) {
+                return false; // Encontrado un cruce
+            }
+        }
+    }
+    return true; // Sin cruces, es convexo
+}
+
+// Evento para mostrar/ocultar el centroide
+document.getElementById('toggleCentroid').addEventListener('click', () => {
+    centroidVisible = !centroidVisible;
+    dibujarPoligono(puntos);
+});
+
+// Evento para generar una nueva figura
+document.getElementById('generatePolygon').addEventListener('click', () => {
+    puntos = generarPuntosAleatorios(5); // Generar 5 puntos aleatorios
+    dibujarPoligono(puntos);
+});
+
+// Dibuja un polígono inicial
+puntos = generarPuntosAleatorios(5); // Generar 5 puntos aleatorios inicialmente
+dibujarPoligono(puntos);
+
