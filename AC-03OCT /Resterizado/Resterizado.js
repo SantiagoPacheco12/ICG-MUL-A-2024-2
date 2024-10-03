@@ -79,6 +79,7 @@ function dibujarCentroide(centroide, puntos) {
         ctx.stroke();
     }
 }
+
 // Función para verificar si el polígono es convexo o cóncavo
 function esConvexo(puntos) {
     let signo = 0;
@@ -116,4 +117,3 @@ document.getElementById('generatePolygon').addEventListener('click', () => {
 // Dibuja un polígono inicial
 puntos = generarPuntosAleatorios(5); // Generar 5 puntos aleatorios inicialmente
 dibujarPoligono(puntos);
-
